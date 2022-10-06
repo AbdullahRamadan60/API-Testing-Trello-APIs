@@ -1,0 +1,598 @@
+{
+	"info": {
+		"_postman_id": "d524347c-5365-4c0c-8f7d-5af84a9a9578",
+		"name": "api.trello.com",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "18912240"
+	},
+	"item": [
+		{
+			"name": "1- Create A Board",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"The response is \\\"200 OK\\\"\", function()\r",
+							"{\r",
+							"    pm.expect(pm.response.code).to.equal(200);\r",
+							"    pm.expect(pm.response.status).to.equal(\"OK\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"The response body has the following keys --> id, name, prefs\", function()\r",
+							"{\r",
+							"    pm.expect(pm.response.json()).to.have.any.keys(\"id\", \"name\", \"prefs\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"The \\\"prefs\\\" has the following keys --> permissionLevel, canBePublic, canInvite\", function()\r",
+							"{\r",
+							"    pm.expect(pm.response.json().prefs).to.have.any.keys(\"permissionLevel\", \"canBePublic\", \"canInvite\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Values of permissionLevel, canBePublic, canInvite are --> \\\"private\\\" , true , true \", function()\r",
+							"{\r",
+							"    pm.expect(pm.response.json().prefs.permissionLevel).to.equal(\"private\");\r",
+							"    pm.expect(pm.response.json().prefs.canBePublic).to.equal(true);\r",
+							"    pm.expect(pm.response.json().prefs.canInvite).to.equal(true);\r",
+							"});\r",
+							"\r",
+							"//An env. variable used to check if this board will be shown in the next Get request of boards\r",
+							"pm.environment.set(\"NewCreatedBoardId\", pm.response.json().id);\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/1/boards/?name=New Potman Board&key=ddd009e08aac71dc66c015c38847af04&token=fe85b989a3223b05da206ac4dbc3822abac2ce484ecc48eab14a89c038a64f42",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"1",
+						"boards",
+						""
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "New Potman Board",
+							"description": "the name of the new board"
+						},
+						{
+							"key": "key",
+							"value": "ddd009e08aac71dc66c015c38847af04"
+						},
+						{
+							"key": "token",
+							"value": "fe85b989a3223b05da206ac4dbc3822abac2ce484ecc48eab14a89c038a64f42"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "2- Get My Boards",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"The response is \\\"200 OK\\\"\", function()\r",
+							"{\r",
+							"    pm.expect(pm.response.code).to.equal(200);\r",
+							"    pm.expect(pm.response.status).to.equal(\"OK\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"The \\\"boards\\\" key is in response body\", function()\r",
+							"{\r",
+							"    pm.expect(pm.response.json()).to.have.any.key(\"boards\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Any board has the following keys --> id, name , closed \", function()\r",
+							"{\r",
+							"    var anyBoard = Math.floor(Math.random() * pm.response.json().boards.length);\r",
+							"    pm.expect(pm.response.json().boards[anyBoard]).to.have.any.keys(\"id\", \"name\", \"closed\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"The number of boards is greater than (above) 1\", function()\r",
+							"{\r",
+							"    pm.expect(pm.response.json().boards.length).to.be.above(1);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Getting the first board id & the last board id, then assigning them to environment variables is done successfully\", function()\r",
+							"{\r",
+							"    pm.environment.set(\"FirstBoardID\", pm.response.json().boards[0].id);\r",
+							"    \r",
+							"    var lastBoardNumIndex = pm.response.json().boards.length - 1;\r",
+							"\r",
+							"    pm.environment.set(\"LastBoardID\", pm.response.json().boards[lastBoardNumIndex].id);\r",
+							"});\r",
+							"       \r",
+							"pm.test(\"The new created board is in the boards list\", function()\r",
+							"{\r",
+							"    var lastBoardNumIndex = pm.response.json().boards.length - 1;\r",
+							"\r",
+							"    pm.expect(pm.response.json().boards[lastBoardNumIndex].id).to.equal(pm.environment.get(\"NewCreatedBoardId\"));\r",
+							"\r",
+							"    //To check if the last board in the list is indeed the last created board of the previous request \r",
+							"});\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/1/members/me?boards=open&key=ddd009e08aac71dc66c015c38847af04&token=fe85b989a3223b05da206ac4dbc3822abac2ce484ecc48eab14a89c038a64f42",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"1",
+						"members",
+						"me"
+					],
+					"query": [
+						{
+							"key": "boards",
+							"value": "open",
+							"description": "get opened boards"
+						},
+						{
+							"key": "key",
+							"value": "ddd009e08aac71dc66c015c38847af04",
+							"description": "//authorization"
+						},
+						{
+							"key": "token",
+							"value": "fe85b989a3223b05da206ac4dbc3822abac2ce484ecc48eab14a89c038a64f42",
+							"description": "//authorization //expires after 1 day"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "3- Create A List",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"The response is \\\"200 OK\\\"\", function()\r",
+							"{\r",
+							"    pm.expect(pm.response.code).to.equal(200);\r",
+							"    pm.expect(pm.response.status).to.equal(\"OK\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"The response body has the following keys --> id, name, idBoard\", function()\r",
+							"{\r",
+							"    pm.expect(pm.response.json()).to.have.any.keys(\"id\", \"name\", \"idBoard\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"The key \\\"closed\\\" has a false value\", function()\r",
+							"{\r",
+							"    pm.expect(pm.response.json().closed).to.equal(false);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"The key \\\"limits\\\" has an empty object value\", function()\r",
+							"{\r",
+							"    pm.expect(pm.response.json().limits).to.be.empty;\r",
+							"});\r",
+							"\r",
+							"\r",
+							"//An env. variable used to check if this list will be shown in the next Get request of board lists\r",
+							"pm.environment.set(\"NewCreatedListId\", pm.response.json().id);\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/1/lists?name=It's a new list&idBoard={{LastBoardID}}&key=ddd009e08aac71dc66c015c38847af04&token=fe85b989a3223b05da206ac4dbc3822abac2ce484ecc48eab14a89c038a64f42",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"1",
+						"lists"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "It's a new list"
+						},
+						{
+							"key": "idBoard",
+							"value": "{{LastBoardID}}"
+						},
+						{
+							"key": "key",
+							"value": "ddd009e08aac71dc66c015c38847af04"
+						},
+						{
+							"key": "token",
+							"value": "fe85b989a3223b05da206ac4dbc3822abac2ce484ecc48eab14a89c038a64f42"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "4- Get Lists On A Board",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"The response is \\\"200 OK\\\"\", function()\r",
+							"{\r",
+							"    pm.expect(pm.response.code).to.equal(200);\r",
+							"    pm.expect(pm.response.status).to.equal(\"OK\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"The number of lists is not less than 3 (3 or more)\", function()\r",
+							"{\r",
+							"    pm.expect(pm.response.json().length).not.to.be.lessThan(3);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Getting the first list id & the last list id, then assigning them to environment variables is done successfully\", function()\r",
+							"{\r",
+							"    //Note that -> the last created list (the newest list) is the first list in the array\r",
+							"    //and the first created list (the oldest list) is the last list in the array \r",
+							"\r",
+							"    pm.environment.set(\"FirstListID\", pm.response.json()[0].id);\r",
+							"\r",
+							"    var lastListIndex = pm.response.json().length - 1 ;\r",
+							"\r",
+							"    pm.environment.set(\"LastListID\", pm.response.json()[lastListIndex].id);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"The new created list is in the board lists\", function()\r",
+							"{\r",
+							"    pm.expect(pm.response.json()[0].id).to.equal(pm.environment.get(\"NewCreatedListId\"));\r",
+							"});\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/1/boards/:id/lists?key=ddd009e08aac71dc66c015c38847af04&token=fe85b989a3223b05da206ac4dbc3822abac2ce484ecc48eab14a89c038a64f42",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"1",
+						"boards",
+						":id",
+						"lists"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "ddd009e08aac71dc66c015c38847af04"
+						},
+						{
+							"key": "token",
+							"value": "fe85b989a3223b05da206ac4dbc3822abac2ce484ecc48eab14a89c038a64f42"
+						}
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "{{LastBoardID}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "5- Archive A List",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"The response is \\\"200 OK\\\"\", function()\r",
+							"{\r",
+							"    pm.expect(pm.response.code).to.equal(200);\r",
+							"    pm.expect(pm.response.status).to.equal(\"OK\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"The \\\"closed\\\" value is true in the response body\", function()\r",
+							"{\r",
+							"    pm.expect(pm.response.json().closed).to.equal(true);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"The response header key \\\"Set-Cookie\\\" value contains \\\"isEnterpriseAdmin%3Dfalse\\\"\", function()\r",
+							"{\r",
+							"    pm.expect(pm.response.headers.get(\"Set-Cookie\")).to.contain(\"isEnterpriseAdmin%3Dfalse\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/1/lists/:id/closed?key=ddd009e08aac71dc66c015c38847af04&token=fe85b989a3223b05da206ac4dbc3822abac2ce484ecc48eab14a89c038a64f42&value=true",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"1",
+						"lists",
+						":id",
+						"closed"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "ddd009e08aac71dc66c015c38847af04"
+						},
+						{
+							"key": "token",
+							"value": "fe85b989a3223b05da206ac4dbc3822abac2ce484ecc48eab14a89c038a64f42"
+						},
+						{
+							"key": "value",
+							"value": "true",
+							"description": "true -> To archive the list"
+						}
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "{{FirstListID}}",
+							"description": "this is the newest created list"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "5-1- Get Lists On A Board After Archiving",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"The response is \\\"200 OK\\\"\", function()\r",
+							"{\r",
+							"    pm.expect(pm.response.code).to.equal(200);\r",
+							"    pm.expect(pm.response.status).to.equal(\"OK\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"The archived list is not in the board lists\", function()\r",
+							"{\r",
+							"    for(var i = 0 ; i < pm.response.json().length ; i++)\r",
+							"    {\r",
+							"        var listId = pm.response.json()[i].id;\r",
+							"\r",
+							"        if(listId == pm.environment.get(\"FirstListID\"))\r",
+							"        {\r",
+							"           pm.expect(listId).not.to.equal(pm.environment.get(\"FirstListID\"));\r",
+							"           break;\r",
+							"        }\r",
+							"        else\r",
+							"        {\r",
+							"           continue;\r",
+							"        }\r",
+							"    }\r",
+							"});\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/1/boards/:id/lists?key=ddd009e08aac71dc66c015c38847af04&token=fe85b989a3223b05da206ac4dbc3822abac2ce484ecc48eab14a89c038a64f42",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"1",
+						"boards",
+						":id",
+						"lists"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "ddd009e08aac71dc66c015c38847af04"
+						},
+						{
+							"key": "token",
+							"value": "fe85b989a3223b05da206ac4dbc3822abac2ce484ecc48eab14a89c038a64f42"
+						}
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "{{LastBoardID}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "6- Delete A Board",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"The response is \\\"200 OK\\\"\", function()\r",
+							"{\r",
+							"    pm.expect(pm.response.code).to.equal(200);\r",
+							"    pm.expect(pm.response.status).to.equal(\"OK\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"The response body contains a deletion successfull message\", function()\r",
+							"{                         //This test will fail\r",
+							"    pm.expect(JSON.stringify(pm.response.json())).to.contain(\"removed successfully\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response body has only \\\"_value\\\" key and its null value\", function()\r",
+							"{\r",
+							"    pm.expect(pm.response.json()).to.have.key(\"_value\");\r",
+							"    pm.expect(pm.response.json()._value).to.equal(null);\r",
+							"});\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/1/boards/:id?key=ddd009e08aac71dc66c015c38847af04&token=fe85b989a3223b05da206ac4dbc3822abac2ce484ecc48eab14a89c038a64f42",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"1",
+						"boards",
+						":id"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "ddd009e08aac71dc66c015c38847af04"
+						},
+						{
+							"key": "token",
+							"value": "fe85b989a3223b05da206ac4dbc3822abac2ce484ecc48eab14a89c038a64f42"
+						}
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "{{LastBoardID}}",
+							"description": "board id to be deleted"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "6-1- Get My Boards After Deletion",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"The response is \\\"200 OK\\\"\", function()\r",
+							"{\r",
+							"    pm.expect(pm.response.code).to.equal(200);\r",
+							"    pm.expect(pm.response.status).to.equal(\"OK\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"The deleted board is not in the boards list\", function()\r",
+							"{\r",
+							"    for(var i = 0 ; i < pm.response.json().boards.length ; i++)\r",
+							"    {\r",
+							"        var boardId = pm.response.json().boards[i].id;\r",
+							"\r",
+							"        if(boardId == pm.environment.get(\"LastBoardID\"))\r",
+							"        {\r",
+							"           pm.expect(boardId).not.to.equal(pm.environment.get(\"LastBoardID\"));\r",
+							"           break;\r",
+							"        }\r",
+							"        else\r",
+							"        {\r",
+							"           continue;\r",
+							"        }\r",
+							"    }\r",
+							"});\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/1/members/me?boards=open&key=ddd009e08aac71dc66c015c38847af04&token=fe85b989a3223b05da206ac4dbc3822abac2ce484ecc48eab14a89c038a64f42",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"1",
+						"members",
+						"me"
+					],
+					"query": [
+						{
+							"key": "boards",
+							"value": "open",
+							"description": "get opened boards"
+						},
+						{
+							"key": "key",
+							"value": "ddd009e08aac71dc66c015c38847af04",
+							"description": "//authorization"
+						},
+						{
+							"key": "token",
+							"value": "fe85b989a3223b05da206ac4dbc3822abac2ce484ecc48eab14a89c038a64f42",
+							"description": "//authorization //expires after 1 day"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

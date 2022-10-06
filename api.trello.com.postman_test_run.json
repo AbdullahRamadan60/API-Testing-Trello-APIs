@@ -1,0 +1,386 @@
+{
+	"id": "e3f88207-3732-4f76-9aec-c1c56411b273",
+	"name": "api.trello.com",
+	"timestamp": "2022-09-12T04:24:50.405Z",
+	"collection_id": "18912240-d524347c-5365-4c0c-8f7d-5af84a9a9578",
+	"folder_id": 0,
+	"environment_id": "18912240-2479aa0a-708c-4de2-aab8-aced07f1e445",
+	"totalPass": 27,
+	"totalFail": 1,
+	"results": [
+		{
+			"id": "6f5d863d-86c0-4e3d-a18c-cc5b05c7993a",
+			"name": "1- Create A Board",
+			"url": "https://api.trello.com/1/boards/?name=New%20Potman%20Board&key=ddd009e08aac71dc66c015c38847af04&token=fe85b989a3223b05da206ac4dbc3822abac2ce484ecc48eab14a89c038a64f42",
+			"time": 664,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"The response is \"200 OK\"": true,
+				"The response body has the following keys --> id, name, prefs": true,
+				"The \"prefs\" has the following keys --> permissionLevel, canBePublic, canInvite": true,
+				"Values of permissionLevel, canBePublic, canInvite are --> \"private\" , true , true ": true
+			},
+			"testPassFailCounts": {
+				"The response is \"200 OK\"": {
+					"pass": 1,
+					"fail": 0
+				},
+				"The response body has the following keys --> id, name, prefs": {
+					"pass": 1,
+					"fail": 0
+				},
+				"The \"prefs\" has the following keys --> permissionLevel, canBePublic, canInvite": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Values of permissionLevel, canBePublic, canInvite are --> \"private\" , true , true ": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				664
+			],
+			"allTests": [
+				{
+					"The response is \"200 OK\"": true,
+					"The response body has the following keys --> id, name, prefs": true,
+					"The \"prefs\" has the following keys --> permissionLevel, canBePublic, canInvite": true,
+					"Values of permissionLevel, canBePublic, canInvite are --> \"private\" , true , true ": true
+				}
+			]
+		},
+		{
+			"id": "4f327c96-b240-43c5-85ed-9f8cb4158425",
+			"name": "2- Get My Boards",
+			"url": "https://api.trello.com/1/members/me?boards=open&key=ddd009e08aac71dc66c015c38847af04&token=fe85b989a3223b05da206ac4dbc3822abac2ce484ecc48eab14a89c038a64f42",
+			"time": 530,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"The response is \"200 OK\"": true,
+				"The \"boards\" key is in response body": true,
+				"Any board has the following keys --> id, name , closed ": true,
+				"The number of boards is greater than (above) 1": true,
+				"Getting the first board id & the last board id, then assigning them to environment variables is done successfully": true,
+				"The new created board is in the boards list": true
+			},
+			"testPassFailCounts": {
+				"The response is \"200 OK\"": {
+					"pass": 1,
+					"fail": 0
+				},
+				"The \"boards\" key is in response body": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Any board has the following keys --> id, name , closed ": {
+					"pass": 1,
+					"fail": 0
+				},
+				"The number of boards is greater than (above) 1": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Getting the first board id & the last board id, then assigning them to environment variables is done successfully": {
+					"pass": 1,
+					"fail": 0
+				},
+				"The new created board is in the boards list": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				530
+			],
+			"allTests": [
+				{
+					"The response is \"200 OK\"": true,
+					"The \"boards\" key is in response body": true,
+					"Any board has the following keys --> id, name , closed ": true,
+					"The number of boards is greater than (above) 1": true,
+					"Getting the first board id & the last board id, then assigning them to environment variables is done successfully": true,
+					"The new created board is in the boards list": true
+				}
+			]
+		},
+		{
+			"id": "b3963bb0-695b-422b-9701-4d0490b70f36",
+			"name": "3- Create A List",
+			"url": "https://api.trello.com/1/lists?name=It%27s%20a%20new%20list&idBoard=631eb487b400b503a286e424&key=ddd009e08aac71dc66c015c38847af04&token=fe85b989a3223b05da206ac4dbc3822abac2ce484ecc48eab14a89c038a64f42",
+			"time": 659,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"The response is \"200 OK\"": true,
+				"The response body has the following keys --> id, name, idBoard": true,
+				"The key \"closed\" has a false value": true,
+				"The key \"limits\" has an empty object value": true
+			},
+			"testPassFailCounts": {
+				"The response is \"200 OK\"": {
+					"pass": 1,
+					"fail": 0
+				},
+				"The response body has the following keys --> id, name, idBoard": {
+					"pass": 1,
+					"fail": 0
+				},
+				"The key \"closed\" has a false value": {
+					"pass": 1,
+					"fail": 0
+				},
+				"The key \"limits\" has an empty object value": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				659
+			],
+			"allTests": [
+				{
+					"The response is \"200 OK\"": true,
+					"The response body has the following keys --> id, name, idBoard": true,
+					"The key \"closed\" has a false value": true,
+					"The key \"limits\" has an empty object value": true
+				}
+			]
+		},
+		{
+			"id": "41ff1094-acb8-4a51-ab5e-4c316dd6cd06",
+			"name": "4- Get Lists On A Board",
+			"url": "https://api.trello.com/1/boards/631eb487b400b503a286e424/lists?key=ddd009e08aac71dc66c015c38847af04&token=fe85b989a3223b05da206ac4dbc3822abac2ce484ecc48eab14a89c038a64f42",
+			"time": 506,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"The response is \"200 OK\"": true,
+				"The number of lists is not less than 3 (3 or more)": true,
+				"Getting the first list id & the last list id, then assigning them to environment variables is done successfully": true,
+				"The new created list is in the board lists": true
+			},
+			"testPassFailCounts": {
+				"The response is \"200 OK\"": {
+					"pass": 1,
+					"fail": 0
+				},
+				"The number of lists is not less than 3 (3 or more)": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Getting the first list id & the last list id, then assigning them to environment variables is done successfully": {
+					"pass": 1,
+					"fail": 0
+				},
+				"The new created list is in the board lists": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				506
+			],
+			"allTests": [
+				{
+					"The response is \"200 OK\"": true,
+					"The number of lists is not less than 3 (3 or more)": true,
+					"Getting the first list id & the last list id, then assigning them to environment variables is done successfully": true,
+					"The new created list is in the board lists": true
+				}
+			]
+		},
+		{
+			"id": "ab149edc-3efa-448a-ad8e-3430b32a3f4d",
+			"name": "5- Archive A List",
+			"url": "https://api.trello.com/1/lists/631eb48a76b85501abd90a12/closed?key=ddd009e08aac71dc66c015c38847af04&token=fe85b989a3223b05da206ac4dbc3822abac2ce484ecc48eab14a89c038a64f42&value=true",
+			"time": 594,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"The response is \"200 OK\"": true,
+				"The \"closed\" value is true in the response body": true,
+				"The response header key \"Set-Cookie\" value contains \"isEnterpriseAdmin%3Dfalse\"": true
+			},
+			"testPassFailCounts": {
+				"The response is \"200 OK\"": {
+					"pass": 1,
+					"fail": 0
+				},
+				"The \"closed\" value is true in the response body": {
+					"pass": 1,
+					"fail": 0
+				},
+				"The response header key \"Set-Cookie\" value contains \"isEnterpriseAdmin%3Dfalse\"": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				594
+			],
+			"allTests": [
+				{
+					"The response is \"200 OK\"": true,
+					"The \"closed\" value is true in the response body": true,
+					"The response header key \"Set-Cookie\" value contains \"isEnterpriseAdmin%3Dfalse\"": true
+				}
+			]
+		},
+		{
+			"id": "9e789b9c-645d-4934-a819-db7ca64195e0",
+			"name": "5-1- Get Lists On A Board After Archiving",
+			"url": "https://api.trello.com/1/boards/631eb487b400b503a286e424/lists?key=ddd009e08aac71dc66c015c38847af04&token=fe85b989a3223b05da206ac4dbc3822abac2ce484ecc48eab14a89c038a64f42",
+			"time": 502,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"The response is \"200 OK\"": true,
+				"The archived list is not in the board lists": true
+			},
+			"testPassFailCounts": {
+				"The response is \"200 OK\"": {
+					"pass": 1,
+					"fail": 0
+				},
+				"The archived list is not in the board lists": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				502
+			],
+			"allTests": [
+				{
+					"The response is \"200 OK\"": true,
+					"The archived list is not in the board lists": true
+				}
+			]
+		},
+		{
+			"id": "447fc969-d0ce-43cf-8ac9-f66e58517715",
+			"name": "6- Delete A Board",
+			"url": "https://api.trello.com/1/boards/631eb487b400b503a286e424?key=ddd009e08aac71dc66c015c38847af04&token=fe85b989a3223b05da206ac4dbc3822abac2ce484ecc48eab14a89c038a64f42",
+			"time": 558,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"The response is \"200 OK\"": true,
+				"The response body contains a deletion successfull message": false,
+				"Response body has only \"_value\" key and its null value": true
+			},
+			"testPassFailCounts": {
+				"The response is \"200 OK\"": {
+					"pass": 1,
+					"fail": 0
+				},
+				"The response body contains a deletion successfull message": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Response body has only \"_value\" key and its null value": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				558
+			],
+			"allTests": [
+				{
+					"The response is \"200 OK\"": true,
+					"The response body contains a deletion successfull message": false,
+					"Response body has only \"_value\" key and its null value": true
+				}
+			]
+		},
+		{
+			"id": "9ef22079-0115-4a97-b6ca-52f33234cd06",
+			"name": "6-1- Get My Boards After Deletion",
+			"url": "https://api.trello.com/1/members/me?boards=open&key=ddd009e08aac71dc66c015c38847af04&token=fe85b989a3223b05da206ac4dbc3822abac2ce484ecc48eab14a89c038a64f42",
+			"time": 239,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"The response is \"200 OK\"": true,
+				"The deleted board is not in the boards list": true
+			},
+			"testPassFailCounts": {
+				"The response is \"200 OK\"": {
+					"pass": 1,
+					"fail": 0
+				},
+				"The deleted board is not in the boards list": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				239
+			],
+			"allTests": [
+				{
+					"The response is \"200 OK\"": true,
+					"The deleted board is not in the boards list": true
+				}
+			]
+		}
+	],
+	"count": 1,
+	"totalTime": 4252,
+	"collection": {
+		"requests": [
+			{
+				"id": "6f5d863d-86c0-4e3d-a18c-cc5b05c7993a",
+				"method": "POST"
+			},
+			{
+				"id": "4f327c96-b240-43c5-85ed-9f8cb4158425",
+				"method": "GET"
+			},
+			{
+				"id": "b3963bb0-695b-422b-9701-4d0490b70f36",
+				"method": "POST"
+			},
+			{
+				"id": "41ff1094-acb8-4a51-ab5e-4c316dd6cd06",
+				"method": "GET"
+			},
+			{
+				"id": "ab149edc-3efa-448a-ad8e-3430b32a3f4d",
+				"method": "PUT"
+			},
+			{
+				"id": "9e789b9c-645d-4934-a819-db7ca64195e0",
+				"method": "GET"
+			},
+			{
+				"id": "447fc969-d0ce-43cf-8ac9-f66e58517715",
+				"method": "DELETE"
+			},
+			{
+				"id": "9ef22079-0115-4a97-b6ca-52f33234cd06",
+				"method": "GET"
+			}
+		]
+	}
+}
